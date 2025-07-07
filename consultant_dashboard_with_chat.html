@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>داشبورد مقدم الخدمة - رؤية واستدامة</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f7f9fc;
+      margin: 0;
+      padding: 20px;
+    }
+    header {
+      background: #007bff;
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    h1 {
+      margin: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    th, td {
+      padding: 12px;
+      text-align: right;
+      border-bottom: 1px solid #eee;
+    }
+    th {
+      background: #f1f1f1;
+    }
+    .message-icon {
+      background: none;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      font-size: 20px;
+    }
+    .message-icon::after {
+      content: attr(data-unread);
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      background: red;
+      color: white;
+      border-radius: 50%;
+      font-size: 12px;
+      padding: 2px 6px;
+      display: none;
+    }
+    .message-icon.unread::after {
+      display: inline-block;
+    }
+    #chatBox {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      max-height: 400px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+    }
+    #chatHeader {
+      background: #007bff;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #chatHeader button {
+      background: transparent;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #chatMessages {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+    #chatInput {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+    #chatInput input {
+      flex: 1;
+      border: none;
+      padding: 10px;
+      font-size: 14px;
+    }
+    #chatInput button {
+      background: #00b894;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>لوحة تحكم مقدم الخدمة - رؤية واستدامة</h1>
+    <p>مرحبا بك، أنت تدير 5 شركات حالياً</p>
+  </header>
+
+  <h2>الشركات المرتبطة بك</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>اسم الشركة</th>
+        <th>القطاع</th>
+        <th>تاريخ التعاقد</th>
+        <th>تواصل</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>شركة ABC الصناعية <button class="message-icon unread" data-unread="1" onclick="openChat('شركة ABC الصناعية')">💬</button></td>
+        <td>صناعي</td>
+        <td>01/05/2024</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>مؤسسة التقنيات الحديثة <button class="message-icon" onclick="openChat('مؤسسة التقنيات الحديثة')">💬</button></td>
+        <td>تقني</td>
+        <td>10/03/2024</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>مطاعم الخليج <button class="message-icon unread" data-unread="2" onclick="openChat('مطاعم الخليج')">💬</button></td>
+        <td>ضيافة</td>
+        <td>20/01/2024</td>
+        <td>-</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div id="chatBox">
+    <div id="chatHeader">
+      <span>المحادثة مع <span id="chatCompany"></span></span>
+      <button onclick="closeChat()">✖</button>
+    </div>
+    <div id="chatMessages">
+      <p><strong>العميل:</strong> مرحبًا، نحتاج تحديث تقرير الأداء.</p>
+      <p><strong>أنت:</strong> سيتم إرساله غدًا بإذن الله.</p>
+    </div>
+    <div id="chatInput">
+      <input type="text" id="messageInput" placeholder="اكتب رسالتك هنا...">
+      <button onclick="sendMessage()">إرسال</button>
+    </div>
+  </div>
+
+  <script>
+    function openChat(companyName) {
+      document.getElementById('chatCompany').innerText = companyName;
+      document.getElementById('chatBox').style.display = 'flex';
+    }
+
+    function closeChat() {
+      document.getElementById('chatBox').style.display = 'none';
+    }
+
+    function sendMessage() {
+      var msgBox = document.getElementById('messageInput');
+      var msg = msgBox.value.trim();
+      if (msg !== '') {
+        var chatArea = document.getElementById('chatMessages');
+        var p = document.createElement('p');
+        p.innerHTML = "<strong>أنت:</strong> " + msg;
+        chatArea.appendChild(p);
+        msgBox.value = '';
+        chatArea.scrollTop = chatArea.scrollHeight;
+      }
+    }
+  </script>
+</body>
+</html>

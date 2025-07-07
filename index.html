@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<title>تسجيل الدخول / الاشتراك</title>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f4f6f8; padding: 30px; }
+    .container { max-width: 700px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; color: #007bff; margin-bottom: 20px; }
+    form { display: none; }
+    form.active { display: block; }
+    label { display: block; margin-top: 14px; font-weight: bold; }
+    input, select {
+      width: 100%; padding: 10px; margin-top: 5px;
+      font-size: 15px; border: 1px solid #ccc; border-radius: 6px;
+    }
+    button {
+      margin-top: 20px; padding: 12px; width: 100%;
+      background: #00b894; border: none; color: white;
+      font-size: 16px; border-radius: 8px; cursor: pointer;
+    }
+    .switcher {
+      text-align: center; margin-top: 20px;
+    }
+    .switcher a { color: #007bff; cursor: pointer; text-decoration: underline; }
+    .agreement { margin-top: 10px; font-size: 14px; }
+    .agreement input { width: auto; margin-left: 8px; }
+    .modal {
+      display: none; position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%); background: white; padding: 20px;
+      border: 2px solid #007bff; border-radius: 8px; width: 90%; max-width: 500px; box-shadow: 0 0 12px rgba(0,0,0,0.2);
+    }
+    .modal h3 { margin-top: 0; color: #007bff; }
+    .modal-close { text-align: center; margin-top: 15px; }
+    .modal-close button { background: #007bff; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; }
+  </style>
+</head>
+<body>
+<div class="container">
+<div style="text-align: center; margin-bottom: 20px;">
+<img alt="شعار الشركة" src="https://i.imgur.com/OD4J9sD.png" style="width: 100px; border-radius: 50%; margin-bottom: 10px;"/>
+<h1 style="color: #007bff; font-size: 22px;">مرحبًا بك في بوابة إدارة الموارد البشرية</h1>
+</div>
+
+<h2>تسجيل الدخول</h2>
+<form class="active" id="loginForm">
+<label for="loginPhone">رقم الجوال</label>
+<input id="loginPhone" required="" type="tel"/>
+<label for="loginPassword">كلمة المرور</label>
+<input id="loginPassword" required="" type="password"/>
+<button type="submit">دخول</button>
+</form>
+<form id="signupForm">
+<label for="companyName">اسم الشركة</label>
+<input id="companyName" name="companyName" required="" type="text"/><label for="crNumber">رقم السجل التجاري</label><input id="crNumber" name="crNumber" required="" type="text"/>
+<label for="phone">رقم الجوال</label>
+<input id="phone" name="phone" required="" type="tel"/>
+<label for="email">البريد الإلكتروني</label>
+<input id="email" name="email" required="" type="email"/>
+<label for="region">المنطقة</label>
+<select id="region" name="region" required="">
+<option value="">اختر المنطقة</option>
+<option>الرياض</option>
+<option>مكة المكرمة</option>
+<option>الشرقية</option>
+</select>
+<label for="municipality">البلدية</label>
+<select id="municipality" name="municipality" required="">
+<option value="">اختر البلدية</option>
+<option>بلدية العليا</option>
+<option>بلدية الشمال</option>
+<option>بلدية النسيم</option>
+</select>
+<label for="activity">نوع النشاط</label>
+<select id="activity" name="activity" required="">
+<option value="">اختر النشاط</option>
+<option>مطاعم</option>
+<option>مصنع</option>
+<option>تقنية</option>
+<option>استشارات</option>
+</select>
+<label for="userType">نوع المستخدم</label>
+<select id="userType" name="userType" required="">
+<option value="">اختر نوع المستخدم</option>
+<option value="consultant">مقدم خدمة (مكتب إدارة)</option>
+<option value="client">شركة تبحث عن خدمات</option>
+</select>
+<div class="agreement">
+<input id="agree" required="" type="checkbox"/>
+<label for="agree">أوافق على <span onclick="document.getElementById('modal').style.display='block';" style="color:#007bff; cursor:pointer;">اتفاقية المستخدم</span></label>
+</div>
+<button type="submit">اشترك الآن</button>
+</form>
+<div class="switcher">
+<p id="switchToSignup">ليس لدي حساب؟ <a onclick="toggleForms()">اشترك الآن</a></p>
+<p id="switchToLogin" style="display:none;">هل لديك حساب؟ <a onclick="toggleForms()">تسجيل الدخول</a></p>
+</div>
+</div>
+<div class="modal" id="modal">
+<h3>📜 اتفاقية المستخدم</h3>
+<p>من خلال الاشتراك في هذا النظام، فإنك توافق على الالتزام بجميع الشروط والأحكام المتعلقة باستخدام المنصة بما يشمل حماية البيانات، احترام الخصوصية، عدم إساءة استخدام الخدمات، وأن تكون جميع البيانات المدخلة صحيحة وتمثلك قانونياً.</p>
+<div class="modal-close">
+<button onclick="document.getElementById('modal').style.display='none';">إغلاق</button>
+</div>
+</div>
+<script>
+function toggleForms() {
+  var loginForm = document.getElementById('loginForm');
+  var signupForm = document.getElementById('signupForm');
+  var switchToLogin = document.getElementById('switchToLogin');
+  var switchToSignup = document.getElementById('switchToSignup');
+  if (loginForm.classList.contains('active')) {
+    loginForm.classList.remove('active');
+    signupForm.classList.add('active');
+    switchToLogin.style.display = 'block';
+    switchToSignup.style.display = 'none';
+    document.querySelector('h2').innerText = "إنشاء حساب جديد";
+  } else {
+    signupForm.classList.remove('active');
+    loginForm.classList.add('active');
+    switchToLogin.style.display = 'none';
+    switchToSignup.style.display = 'block';
+    document.querySelector('h2').innerText = "تسجيل الدخول";
+  }
+}
+
+// توجيه بعد الاشتراك حسب نوع المستخدم
+document.getElementById("signupForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const type = document.getElementById("userType").value;
+  if (type === "consultant") {
+    window.location.href = "consultant_main_dashboard.html";
+  } else if (type === "client") {
+    window.location.href = "client_dashboard_with_localstorage.html";
+  } else {
+    alert("يرجى اختيار نوع المستخدم");
+  }
+});
+
+// توجيه بعد تسجيل الدخول (مؤقت: على أساس طول الرقم فقط)
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const phone = document.getElementById("loginPhone").value;
+  if (phone.startsWith("05")) {
+    window.location.href = "client_dashboard_with_localstorage.html";
+  } else {
+    window.location.href = "consultant_main_dashboard.html";
+  }
+});
+</script>
+</body>
+</html>
